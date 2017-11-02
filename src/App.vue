@@ -7,4 +7,5 @@
 
 <style lang="stylus">
   @import './stylus/main'
+  @import './stylus/theme'
 </style>

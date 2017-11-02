@@ -19,7 +19,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  var login = true
+  var login = false
   console.log(to.path)
   if (login || to.path === '/login') {
     next()

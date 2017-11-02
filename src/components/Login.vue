@@ -22,16 +22,18 @@
                 <v-text-field
                   label="Correo Electronico"
                   type="email"
+                  v-model="credentials.usuario"
+                  color="blue-grey darken-1"
                   required
                 ></v-text-field>
                 <v-text-field
                   label="Contraseña"
+                  v-model="credentials.password"
                   type="password"
+                  color="blue-grey darken-1"
                   required
                 ></v-text-field>
-                <router-link to="/" style="text-decoration:none;">
-                  <v-btn block round large color="blue-grey darken-3 white--text">Iniciar Sesion</v-btn>
-                </router-link>
+                <v-btn @click="submit(credentials)" :disabled="!isValidForm" block round large color="blue-grey darken-3 white--text">Iniciar Sesion</v-btn>
                 
               </v-form>
             </v-flex>
@@ -44,7 +46,29 @@
 </template>
 
 <script>
+import { loginService } from '@/services/Login.service'
+
 export default {
+  data () {
+    return {
+      credentials: {
+        usuario: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    submit (credentials) {
+      loginService.authenticate(credentials).then(data => {
+        console.log(data.body)
+      })
+    }
+  },
+  computed: {
+    isValidForm () {
+      return this.credentials.usuario !== '' && this.credentials.password !== ''
+    }
+  }
 }
 </script>
 
