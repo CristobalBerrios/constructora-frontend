@@ -19,7 +19,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  //Prueba de login, falta agregar los servicios para la validacion
+  // Prueba de login, falta agregar los servicios para la validacion
   var login = true
   console.log(to.path)
   if (login || to.path === '/login') {
