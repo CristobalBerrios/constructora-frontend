@@ -29,10 +29,13 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (credentials.isLogin() || to.path === '/login') {
+  if (credentials.isLogin()) {
+    if (to.path === '/login') next({path: '/'})
+    else next()
     next()
   } else {
-    next({path: '/login'})
+    if (to.path === '/login') next()
+    else next({path: '/login'})
   }
 })
 
