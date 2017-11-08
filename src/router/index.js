@@ -1,15 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MyApp from '@/components/MyApp'
+import Maquinaria from '@/components/Maquinaria'
 import LoginComponent from '@/components/Login'
+import Credentials from '@/services/Credentials.service.js'
 
 Vue.use(Router)
+
+const credentials = new Credentials()
 
 const router = new Router({
   routes: [
     {
       path: '/',
-      component: MyApp
+      component: MyApp,
+      children: [
+        {
+          path: 'maquinaria',
+          component: Maquinaria
+        }
+      ]
     },
     {
       path: '/login',
@@ -19,10 +29,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  // Prueba de login, falta agregar los servicios para la validacion
-  var login = true
-  console.log(to.path)
-  if (login || to.path === '/login') {
+  if (credentials.isLogin() || to.path === '/login') {
     next()
   } else {
     next({path: '/login'})

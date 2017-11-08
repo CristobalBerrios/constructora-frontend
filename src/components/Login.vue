@@ -11,7 +11,7 @@
     </v-toolbar>
     <v-layout row>
       <v-flex xs10 offset-xs1 md6 offset-md3>
-        <v-card style="height: 340px;" class="card--flex-toolbar grey lighten-3">
+        <v-card style="height: 390px;" class="card--flex-toolbar grey lighten-3">
           <br>
           <v-layout row wrap>
             <v-flex xs4 offset-xs4 class="text-xs-center">
@@ -33,6 +33,7 @@
                   color="blue-grey darken-1"
                   required
                 ></v-text-field>
+                <v-alert color="error" icon="warning" :value="errorLogin">Credenciales erroneas</v-alert>
                 <v-btn @click="submit(credentials)" :disabled="!isValidForm" block round large color="blue-grey darken-3 white--text">Iniciar Sesion</v-btn>
                 
               </v-form>
@@ -47,6 +48,7 @@
 
 <script>
 import { loginService } from '@/services/Login.service'
+import CredentialsServices from '@/services/Credentials.service.js'
 
 export default {
   data () {
@@ -54,13 +56,24 @@ export default {
       credentials: {
         usuario: '',
         password: ''
-      }
+      },
+      errorLogin: false,
+      credentialService: new CredentialsServices()
     }
   },
   methods: {
     submit (credentials) {
       loginService.authenticate(credentials).then(data => {
-        console.log(data.body)
+        this.credentialService.setToken(data.body.token)
+        this.credentialService.setCurrentUser(data.body.usuario)
+        console.log(data.body.usuario)
+        this.$router.push('/')
+      }, err => {
+        if (err.status) {
+          this.errorLogin = true
+          console.log(err)
+          console.log('hay error en el login')
+        }
       })
     }
   },

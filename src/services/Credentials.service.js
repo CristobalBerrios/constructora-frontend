@@ -3,7 +3,7 @@ class CredentialsService {
     localStorage.setItem('user', user)
   }
   getCurrentUser () {
-    let user = JSON.parse(localStorage.getItem('user'))
+    let user = localStorage.getItem('user')
     return user
   }
   setToken (token) {
@@ -14,8 +14,13 @@ class CredentialsService {
     return token
   }
   clearCredentials () {
-    localStorage.clear('user_test')
+    localStorage.clear('user')
     localStorage.clear('token')
+  }
+
+  isLogin () {
+    if (this.getToken() != null) return true
+    else return false
   }
 }
 
