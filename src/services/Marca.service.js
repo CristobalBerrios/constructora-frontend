@@ -13,6 +13,14 @@ class MarcaService extends ApiService {
   getAll () {
     return this.getResource().query()
   }
+
+  getById (id) {
+    return this.getResource().get({id: id})
+  }
+
+  save (id, model) {
+    return this.getResource().save({id: id}, {marca: model})
+  }
 }
 
-export const marcaService = new MarcaService('marca')
+export const marcaService = new MarcaService('marcas{/id}')

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MyApp from '@/components/MyApp'
+import Obra from '@/components/Obra'
 import Maquinaria from '@/components/Maquinaria'
 import LoginComponent from '@/components/Login'
 import Credentials from '@/services/Credentials.service.js'
@@ -16,8 +17,12 @@ const router = new Router({
       component: MyApp,
       children: [
         {
-          path: 'maquinaria',
+          path: 'maquinarias',
           component: Maquinaria
+        },
+        {
+          path: 'obras',
+          component: Obra
         }
       ]
     },

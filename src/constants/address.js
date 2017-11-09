@@ -1,8 +1,8 @@
 export const address = {
-  base: 'http://localhost:8000',
-  api: 'http://localhost:8000/api/',
+  base: 'https://api-constructora.herokuapp.com/',
   /*
-  api: 'http://10.0.2.99:8888/Startup/Constructora/public/api/',
+  api: 'http://localhost:8000/api/',
   */
+  api: 'https://api-constructora.herokuapp.com/api/',
   spa: 'http://localhost:8080'
 }

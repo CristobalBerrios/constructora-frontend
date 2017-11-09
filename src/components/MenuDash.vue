@@ -43,7 +43,7 @@
             <v-list-tile-title>Trabajadores</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="go('maquinaria')">
+        <v-list-tile @click="go('maquinarias')">
           <v-list-tile-action>
             <img src="../assets/loader.png" alt="">
           </v-list-tile-action>
