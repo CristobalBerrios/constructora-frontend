@@ -11,7 +11,7 @@
     </v-toolbar>
     <v-layout row>
       <v-flex xs10 offset-xs1 md6 offset-md3>
-        <v-card style="height: 390px;" class="card--flex-toolbar grey lighten-3">
+        <v-card style="height: 350px;" class="card--flex-toolbar grey lighten-3">
           <br>
           <v-layout row wrap>
             <v-flex xs4 offset-xs4 class="text-xs-center">
@@ -33,7 +33,7 @@
                   color="blue-grey darken-1"
                   required
                 ></v-text-field>
-                <v-alert color="error" icon="warning" :value="errorLogin">Credenciales erroneas</v-alert>
+                <small v-if="errorLogin" class="red--text">Credenciales erroneas</small>
                 <v-btn @click="submit(credentials)" :disabled="!isValidForm" block round large color="blue-grey darken-3 white--text">Iniciar Sesion</v-btn>
                 
               </v-form>
