@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-      class="blue-grey darken-3 white--text"
+      class="blue-grey darken-4 white--text"
       v-model="estado"
       v-on:input="setEstado()"
       width="230"
@@ -9,13 +9,23 @@
       app
       dark
     >
-    <div class="caja-info blue-grey darken-4">
+   
+    <div class="caja-info">
       <div class="info-user">
-        <img src="../assets/user.png" alt="" height="90px">
-        <p>{{ usuario }}</p>
+        <v-list class="lista">
+          <v-list-tile>
+            <v-list-tile-avatar>
+              <img src="../assets/user.png" />
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Cristobal Berrios</v-list-tile-title>
+              <v-list-tile-sub-title>{{usuario}}</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
       </div>
-     
     </div>
+    
       <v-list dense>
         <v-list-tile @click="go('obras')">
           <v-list-tile-action>
@@ -84,14 +94,22 @@ export default {
 <style scoped>
 
 .caja-info {
-  height: 200px;
-  text-align: center;
+  height: 120px;
+  background-image: url('../assets/fondo_dash.png');
+  background-size: cover;
+  background-position: center;
 }
+
+.lista {
+  height: 100%;
+}
+
 
 .info-user {
   position: relative;
   top: 50%;
   -webkit-transform: translateY(-50%);
+  font-size: 1.2em;
 }
 </style>
 
