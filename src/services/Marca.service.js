@@ -15,4 +15,4 @@ class MarcaService extends ApiService {
   }
 }
 
-export const marcaService = new MarcaService('marca')
+export const marcaService = new MarcaService('marcas')
