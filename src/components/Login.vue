@@ -34,7 +34,7 @@
                   required
                 ></v-text-field>
                 <small v-if="errorLogin" class="red--text">Credenciales erroneas</small>
-                <v-btn @click="submit(credentials)" :disabled="!isValidForm" block round large color="blue-grey darken-3 white--text">Iniciar Sesion</v-btn>
+                <v-btn :loading="isLoading" @click="submit(credentials)" :disabled="!isValidForm" block round large color="blue-grey darken-3 white--text">Iniciar Sesion</v-btn>
                 
               </v-form>
             </v-flex>
@@ -58,19 +58,22 @@ export default {
         password: ''
       },
       errorLogin: false,
-      credentialService: new CredentialsServices()
+      credentialService: new CredentialsServices(),
+      isLoading: false
     }
   },
   methods: {
     submit (credentials) {
+      this.isLoading = true
       loginService.authenticate(credentials).then(data => {
         this.credentialService.setToken(data.body.token)
         this.credentialService.setCurrentUser(data.body.usuario)
         console.log(data.body.usuario)
-        this.$router.push('/')
+        this.$router.push('/obras')
       }, err => {
         if (err.status) {
           this.errorLogin = true
+          this.isLoading = false
           console.log(err)
           console.log('hay error en el login')
         }
