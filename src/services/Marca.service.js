@@ -23,8 +23,4 @@ class MarcaService extends ApiService {
   }
 }
 
-<<<<<<< HEAD
 export const marcaService = new MarcaService('marcas')
-=======
-export const marcaService = new MarcaService('marcas{/id}')
->>>>>>> produccion
