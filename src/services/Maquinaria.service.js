@@ -24,8 +24,4 @@ class MaquinariaService extends ApiService {
   }
 }
 
-<<<<<<< HEAD
 export const maquinariaService = new MaquinariaService('maquinarias')
-=======
-export const maquinariaService = new MaquinariaService('maquinarias{/id}')
->>>>>>> produccion
