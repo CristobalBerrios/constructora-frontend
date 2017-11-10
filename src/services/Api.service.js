@@ -1,4 +1,3 @@
-import {address} from '@/constants/address.js'
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 
@@ -6,10 +5,13 @@ Vue.use(VueResource)
 
 class ApiConnect {
   constructor (route) {
-    this.resource = Vue.resource(address.api + route)
+    this.resource = Vue.resource(process.env.address.api + route)
   }
   getResource () {
     return this.resource
+  }
+  getVueInstance () {
+    return Vue
   }
   query () {
     return this.resource.query()
