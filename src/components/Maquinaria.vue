@@ -96,7 +96,7 @@ export default {
     }
   },
   mounted () {
-    maquinariaService.getAll().then(data => {
+    maquinariaService.query().then(data => {
       console.log(data.body)
       this.items = data.body
     })
@@ -105,7 +105,7 @@ export default {
     showDialog () {
       let vm = this
       vm.dialog = true
-      marcaService.getAll().then(data => {
+      marcaService.query().then(data => {
         vm.marcas = data.body
         console.log(vm.marcas)
       })
