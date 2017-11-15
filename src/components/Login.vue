@@ -68,6 +68,7 @@ export default {
       loginService.authenticate(credentials).then(data => {
         this.credentialService.setToken(data.body.token)
         this.credentialService.setCurrentUser(data.body.usuario)
+        this.credentialService.setEmpresaUser(data.body.razon_social)
         console.log(data.body.usuario)
         this.$router.push('/obras')
       }, err => {
