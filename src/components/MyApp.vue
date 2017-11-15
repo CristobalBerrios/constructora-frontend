@@ -1,6 +1,6 @@
 <template>
   <v-app light>
-    <menu-dash :usuario="usuario" :estado.sync="estadoMenu"></menu-dash>
+    <menu-dash :empresa="empresa" :usuario="usuario" :estado.sync="estadoMenu"></menu-dash>
     <toolbar v-on:toggle-menu="toggle()" v-on:logout="logout()"></toolbar>
     <main class="grey lighten-2">
       <v-content>
@@ -22,6 +22,7 @@
       return {
         estadoMenu: true,
         usuario: '',
+        empresa: '',
         credentialService: new CredentialServices()
       }
     },
@@ -29,6 +30,7 @@
     mounted () {
       let vm = this
       vm.usuario = vm.credentialService.getCurrentUser()
+      vm.empresa = vm.credentialService.getEmpresaUser()
     },
     methods: {
       toggle () {
