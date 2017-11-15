@@ -6,6 +6,15 @@ class CredentialsService {
     let user = localStorage.getItem('user')
     return user
   }
+
+  setEmpresaUser (empresa) {
+    localStorage.setItem('empresa', empresa)
+  }
+  getEmpresaUser () {
+    let empresa = localStorage.getItem('empresa')
+    return empresa
+  }
+
   setToken (token) {
     localStorage.setItem('token', token)
   }
