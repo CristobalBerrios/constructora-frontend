@@ -4,6 +4,7 @@
       v-bind:headers="headers"
       :items="items"
       class="elevation-20"
+      rows-per-page-text="Datos por pagina"
     >
     <template slot="items" slot-scope="props">
       <td>{{ props.item.patente }}</td>
@@ -16,6 +17,24 @@
   <v-btn fab dark color="blue-grey darken-3" class="btn-flotante" @click="showDialog()">
     <v-icon dark>add</v-icon>
   </v-btn>
+  <br><br>
+
+  <v-layout row>
+    <v-flex xs4>
+      <v-card>
+        <v-toolbar class="blue-grey darken-4 white--text">
+          <v-toolbar-title>Marcas</v-toolbar-title>
+        </v-toolbar>
+        <v-list dense >
+					<v-list-tile v-for="marca in marcas" v-bind:key="marca.id" @click="">
+						<v-list-tile-content>
+							<v-list-tile-title>{{ marca.descripcion }}</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
+				</v-list>
+      </v-card>
+    </v-flex>
+  </v-layout>
 
   
 
@@ -99,6 +118,11 @@ export default {
     maquinariaService.query().then(data => {
       console.log(data.body)
       this.items = data.body
+    })
+
+    marcaService.query().then(data => {
+      this.marcas = data.body
+      console.log(this.marcas)
     })
   },
   methods: {
