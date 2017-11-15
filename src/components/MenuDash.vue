@@ -18,7 +18,7 @@
               <img src="../assets/user.png" />
             </v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title>Cristobal Berrios</v-list-tile-title>
+              <v-list-tile-title>{{ empresa }}</v-list-tile-title>
               <v-list-tile-sub-title>{{usuario}}</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -79,7 +79,7 @@ export default {
       estado: null
     }
   },
-  props: ['estado', 'usuario'],
+  props: ['estado', 'usuario', 'empresa'],
   methods: {
     go (ruta) {
       this.$router.push(ruta)
