@@ -73,12 +73,6 @@
 
 <script>
 export default {
-  data () {
-    return {
-      drawer: true,
-      estado: null
-    }
-  },
   props: ['estado', 'usuario', 'empresa'],
   methods: {
     go (ruta) {
