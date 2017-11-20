@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" persistent max-width="500px">
       <v-card>
         <v-toolbar flat dark color="blue-grey darken-3">
-          <v-toolbar-title class="white--text">Nueva Maquinaria</v-toolbar-title>
+          <v-toolbar-title class="white--text">{{ title }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon @click="closeDialog">
             <v-icon>close</v-icon>
@@ -12,13 +12,13 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex md5>
-                <v-text-field v-model="maquinaria.patente" label="Patente" required></v-text-field>
+                <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.patente" label="Patente" required></v-text-field>
               </v-flex>
               <v-flex md5>
-                <v-text-field v-model="maquinaria.identificacion" label="Identificacion" hint="example of helper text only on focus"></v-text-field>
+                <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.identificacion" label="Identificacion" hint="example of helper text only on focus"></v-text-field>
               </v-flex>
               <v-flex md2>
-                <v-text-field v-model="maquinaria.anho" label="Año" required></v-text-field>
+                <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.anho" label="Año" required></v-text-field>
               </v-flex>
               <v-flex xs6>
                 <v-select
@@ -31,18 +31,19 @@
                 ></v-select>
               </v-flex>
               <v-flex x6>
-                <v-text-field v-model="maquinaria.numero_serie" label="Numero de serie" required></v-text-field>                          
+                <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.numero_serie" label="Numero de serie" required></v-text-field>                          
               </v-flex>
               <v-flex xs12>
             <v-text-field
               label="Descripcion"
               v-model="maquinaria.descripcion"
+              :readonly="tipo === 'ver'"
               multi-line
               rows="2"
             ></v-text-field>
               </v-flex>
               <small v-if="errorMaquinaria"  class="red--text">Error al crear la maquinaria</small>
-              <v-flex xs12>
+              <v-flex xs12 v-if="tipo === 'crear'">
                 <v-btn :loading="loadingMaquinaria" block dark color="blue-grey darken-3" raised @click="submitMaquinaria(maquinaria)">Agregar</v-btn>
               </v-flex>
             </v-layout>
@@ -60,16 +61,26 @@ export default {
   data () {
     return {
       marcas: [],
-      maquinaria: {},
       loadingMaquinaria: false,
-      errorMaquinaria: false
+      errorMaquinaria: false,
+      title: ''
     }
   },
-  props: ['dialog'],
+  props: {
+    dialog: Boolean,
+    tipo: String,
+    maquinaria: {type: Object, default: function () { return {} }}
+  },
   mounted () {
-    marcaService.query().then(data => {
-      this.marcas = data.body
-    })
+    if (this.tipo === 'ver') {
+      this.title = 'Maquinaria'
+    }
+    if (this.tipo === 'crear') {
+      this.title = 'Nueva Maquinaria'
+      marcaService.query().then(data => {
+        this.marcas = data.body
+      })
+    }
   },
   methods: {
     submitMaquinaria (model) {
