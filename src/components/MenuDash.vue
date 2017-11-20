@@ -29,7 +29,7 @@
       <v-list dense>
         <v-list-tile @click="go('obras')">
           <v-list-tile-action>
-            <img src="../assets/shovel.png" alt="">
+            <img src="../assets/shovel.png" alt="" class="icon">
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>Obras</v-list-tile-title>
@@ -37,7 +37,7 @@
         </v-list-tile>
         <v-list-tile @click="go('trabajadores')">
           <v-list-tile-action>
-            <img src="../assets/engineer.png" alt="">
+            <img src="../assets/engineer.png" alt="" class="icon">
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>Trabajadores</v-list-tile-title>
@@ -45,7 +45,7 @@
         </v-list-tile>
         <v-list-tile @click="go('maquinarias')">
           <v-list-tile-action>
-            <img src="../assets/loader.png" alt="">
+            <img src="../assets/loader.png" alt="" class="icon">
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>Maquinaria</v-list-tile-title>
@@ -53,7 +53,7 @@
         </v-list-tile>
         <v-list-tile @click="go('materiales')">
           <v-list-tile-action>
-            <img src="../assets/wheelbarrow.png" alt="">
+            <img src="../assets/wheelbarrow.png" alt="" class="icon">
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>Materiales</v-list-tile-title>
@@ -61,12 +61,35 @@
         </v-list-tile>
         <v-list-tile @click="go('proveedores')">
           <v-list-tile-action>
-            <img src="../assets/cart.png" alt="">
+            <img src="../assets/cart.png" alt="" class="icon">
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>Proveedores</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-group dense>
+          <v-list-tile slot="item" @click="">
+            <v-list-tile-action >
+              <v-icon>settings</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Configuraciones</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>keyboard_arrow_down</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-list-tile @click="go('obras')">
+            <v-list-tile-content>
+              <v-list-tile-title>Obras</v-list-tile-title>
+            </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="go('obras')">
+            <v-list-tile-content>
+              <v-list-tile-title>Marcas</v-list-tile-title>
+            </v-list-tile-content>
+        </v-list-tile>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
 </template>
@@ -105,6 +128,12 @@ export default {
   -webkit-transform: translateY(-50%);
   font-size: 1.2em;
 }
+
+.icon {
+  height: 25px;
+}
+
+
 </style>
 
 
