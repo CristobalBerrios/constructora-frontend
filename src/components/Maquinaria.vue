@@ -8,18 +8,21 @@
       <template slot="items" slot-scope="props">
         <td>{{ props.item.patente }}</td>
         <td>{{ props.item.identificacion }}</td>
-        <td>{{ props.item.descripcion }}</td>
         <td>{{ props.item.anho }}</td>
         <td>{{ props.item.marca.descripcion }}</td>
+        <td><v-btn color="primary" small @click="showMaquinaria(props.item.id)">Ver</v-btn></td>
       </template>
     </v-data-table>
 
-    <v-btn fab dark color="blue-grey darken-3" class="btn-flotante" @click="setDialog">
+    <v-btn fab dark color="blue-grey darken-3" class="btn-flotante" @click="setDialog('crear')">
       <v-icon dark>add</v-icon>
     </v-btn>
   
     <!-- Modal para agregar una maquinaria -->
-    <maquinaria-form :dialog="dialog" @newMaquinaria="pushMaquinaria" @closeDialog="setDialog"></maquinaria-form>
+    <maquinaria-form :titulo="titulo" tipo="crear" :dialog="dialogCrear" @newMaquinaria="pushMaquinaria" @closeDialog="setDialog('crear')"></maquinaria-form>
+
+    <!-- Modal para ver una maquinaria -->
+    <maquinaria-form :maquinaria="maquinaria" tipo="ver" :dialog="dialogVer" @closeDialog="setDialog('ver')"></maquinaria-form>
   </section>
 </template>
 
@@ -33,12 +36,13 @@ export default {
       headers: [
         {text: 'Patente', value: 'patente', sortable: false, align: 'left'},
         {text: 'Identificacion', value: 'identificacion', sortable: false, align: 'left'},
-        {text: 'Descripcion', value: 'descripcion', sortable: false, align: 'left'},
         {text: 'Año', value: 'anho', sortable: false, align: 'left'},
         {text: 'Marca', value: 'marca', sortable: false, align: 'left'}
       ],
       items: [],
-      dialog: false
+      dialogCrear: false,
+      dialogVer: false,
+      maquinaria: {}
     }
   },
   components: {MaquinariaForm},
@@ -48,11 +52,18 @@ export default {
     })
   },
   methods: {
-    setDialog () {
-      this.dialog = !this.dialog
+    setDialog (tipo, id) {
+      if (tipo === 'crear') this.dialogCrear = !this.dialogCrear
+      if (tipo === 'ver') this.dialogVer = !this.dialogVer
     },
     pushMaquinaria (data) {
       this.items.push(data)
+    },
+    showMaquinaria (id) {
+      maquinariaService.getById(id).then(data => {
+        this.maquinaria = data.body
+        this.setDialog('ver')
+      })
     }
   }
 }
