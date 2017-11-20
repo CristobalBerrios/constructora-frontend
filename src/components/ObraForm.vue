@@ -70,7 +70,7 @@ export default {
       loadingObra: false
     }
   },
-  props: ['dialog'],
+  props: ['dialog', 'tipo'],
   methods: {
     submitObra (data) {
       data.cliente_id = 1
