@@ -10,7 +10,7 @@
         <td>{{ props.item.identificacion }}</td>
         <td>{{ props.item.anho }}</td>
         <td>{{ props.item.marca.descripcion }}</td>
-        <td><v-btn color="primary" small @click="showMaquinaria(props.item.id)">Ver</v-btn></td>
+        <td><v-btn color="primary" small @click="setDialog('ver', props.item.id)">Ver</v-btn></td>
       </template>
     </v-data-table>
 
@@ -19,10 +19,8 @@
     </v-btn>
   
     <!-- Modal para agregar una maquinaria -->
-    <maquinaria-form :titulo="titulo" tipo="crear" :dialog="dialogCrear" @newMaquinaria="pushMaquinaria" @closeDialog="setDialog('crear')"></maquinaria-form>
+    <maquinaria-form :tipo="tipoForm" :dialog="dialog" @newMaquinaria="pushMaquinaria" @closeDialog="setDialog('hol',1)"></maquinaria-form>
 
-    <!-- Modal para ver una maquinaria -->
-    <maquinaria-form :maquinaria="maquinaria" tipo="ver" :dialog="dialogVer" @closeDialog="setDialog('ver')"></maquinaria-form>
   </section>
 </template>
 
@@ -40,9 +38,9 @@ export default {
         {text: 'Marca', value: 'marca', sortable: false, align: 'left'}
       ],
       items: [],
-      dialogCrear: false,
-      dialogVer: false,
-      maquinaria: {}
+      dialog: false,
+      maquinaria: {},
+      tipoForm: ''
     }
   },
   components: {MaquinariaForm},
@@ -53,17 +51,13 @@ export default {
   },
   methods: {
     setDialog (tipo, id) {
-      if (tipo === 'crear') this.dialogCrear = !this.dialogCrear
-      if (tipo === 'ver') this.dialogVer = !this.dialogVer
+      if (id) this.$emit(tipo, id)
+      else this.$emit(tipo)
+      this.tipoForm = tipo
+      this.dialog = !this.dialog
     },
     pushMaquinaria (data) {
       this.items.push(data)
-    },
-    showMaquinaria (id) {
-      maquinariaService.getById(id).then(data => {
-        this.maquinaria = data.body
-        this.setDialog('ver')
-      })
     }
   }
 }
