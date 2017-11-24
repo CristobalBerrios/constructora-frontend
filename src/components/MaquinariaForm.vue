@@ -20,7 +20,7 @@
               <v-flex md2>
                 <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.anho" label="Año" required></v-text-field>
               </v-flex>
-              <v-flex xs6>
+              <v-flex v-if="tipo === 'crear'" xs6>
                 <v-select
                   label="Marca"
                   :items="marcas"
@@ -29,6 +29,9 @@
                   v-model="maquinaria.marca_id"
                   required
                 ></v-select>
+              </v-flex>
+              <v-flex x6 v-if="tipo === 'ver'">
+                <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.marca.descripcion" label="Marca" required></v-text-field>                          
               </v-flex>
               <v-flex x6>
                 <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.numero_serie" label="Numero de serie" required></v-text-field>                          
@@ -61,26 +64,18 @@ export default {
   data () {
     return {
       marcas: [],
+      maquinaria: {},
       loadingMaquinaria: false,
       errorMaquinaria: false,
-      title: ''
+      title: '',
+      tipo: '',
+      editable: true
     }
   },
-  props: {
-    dialog: Boolean,
-    tipo: String,
-    maquinaria: {type: Object, default: function () { return {} }}
-  },
-  mounted () {
-    if (this.tipo === 'ver') {
-      this.title = 'Maquinaria'
-    }
-    if (this.tipo === 'crear') {
-      this.title = 'Nueva Maquinaria'
-      marcaService.query().then(data => {
-        this.marcas = data.body
-      })
-    }
+  props: ['dialog', 'tipo'],
+  created () {
+    this.$parent.$on('ver', this.showMaquinaria)
+    this.$parent.$on('crear', this.createMaquinaria)
   },
   methods: {
     submitMaquinaria (model) {
@@ -95,7 +90,21 @@ export default {
       })
     },
     closeDialog () {
+      this.maquinaria = {}
       this.$emit('closeDialog')
+    },
+    createMaquinaria () {
+      this.title = 'Nueva Maquinaria'
+      marcaService.query().then(data => {
+        this.marcas = data.body
+      })
+    },
+    showMaquinaria (id) {
+      this.title = 'Maquinaria'
+      maquinariaService.getById(id).then(data => {
+        this.maquinaria = data.body
+        console.log(data)
+      })
     }
   }
 }
