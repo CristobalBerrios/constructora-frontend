@@ -12,15 +12,15 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex md5>
-                <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.patente" label="Patente" required></v-text-field>
+                <v-text-field :readonly="!editable" v-model="maquinaria.patente" label="Patente" required></v-text-field>
               </v-flex>
               <v-flex md5>
-                <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.identificacion" label="Identificacion" hint="example of helper text only on focus"></v-text-field>
+                <v-text-field :readonly="!editable" v-model="maquinaria.identificacion" label="Identificacion" required></v-text-field>
               </v-flex>
               <v-flex md2>
-                <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.anho" label="Año" required></v-text-field>
+                <v-text-field :readonly="!editable" v-model="maquinaria.anho" label="Año" required></v-text-field>
               </v-flex>
-              <v-flex v-if="tipo === 'crear'" xs6>
+              <v-flex v-if="editable" xs6>
                 <v-select
                   label="Marca"
                   :items="marcas"
@@ -30,30 +30,43 @@
                   required
                 ></v-select>
               </v-flex>
-              <v-flex x6 v-if="tipo === 'ver'">
-                <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.marca.descripcion" label="Marca" required></v-text-field>                          
+              <v-flex v-else x6>
+                <v-text-field :readonly="!editable" v-model="maquinaria.marca" label="Marca" required></v-text-field>                          
               </v-flex>
               <v-flex x6>
-                <v-text-field :readonly="tipo === 'ver'" v-model="maquinaria.numero_serie" label="Numero de serie" required></v-text-field>                          
+                <v-text-field :readonly="!editable" v-model="maquinaria.numero_serie" label="Numero de serie" required></v-text-field>                          
               </v-flex>
               <v-flex xs12>
             <v-text-field
               label="Descripcion"
               v-model="maquinaria.descripcion"
-              :readonly="tipo === 'ver'"
+              :readonly="!editable"
               multi-line
               rows="2"
             ></v-text-field>
               </v-flex>
-              <small v-if="errorMaquinaria"  class="red--text">Error al crear la maquinaria</small>
-              <v-flex xs12 v-if="tipo === 'crear'">
-                <v-btn :loading="loadingMaquinaria" block dark color="blue-grey darken-3" raised @click="submitMaquinaria(maquinaria)">Agregar</v-btn>
+              <v-flex v-if="title === 'Maquinaria'" xs4>
+                <v-switch color="success" label="Editar" v-model="editable"></v-switch>
+              </v-flex>
+              <v-flex v-if="editable" xs12>
+                <v-btn v-if="title !== 'Maquinaria'" large :loading="loadingMaquinaria" block dark color="blue-grey darken-3" raised @click="submitMaquinaria(maquinaria)">Agregar</v-btn>
+                <v-btn v-else large :loading="loadingMaquinaria" block dark color="blue-grey darken-3" raised @click="updateMaquinaria(maquinaria)">Actualizar</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
       </v-card>
-    </v-dialog>
+      
+      <!-- Mensaje de error -->
+      <v-snackbar 
+      v-model="snack.model"
+      :timeout="snack.timeout"
+      color="error">
+      {{ snack.message }}
+      <v-btn flat color="white" @click.native="snack.model = false">Cerrar</v-btn>
+    </v-snackbar>
+
+  </v-dialog>
 </template>
 
 <script>
@@ -66,46 +79,78 @@ export default {
       marcas: [],
       maquinaria: {},
       loadingMaquinaria: false,
-      errorMaquinaria: false,
       title: '',
-      tipo: '',
-      editable: true
+      editable: false,
+      snack: {
+        model: false,
+        message: '',
+        timeout: 4000
+      }
     }
   },
-  props: ['dialog', 'tipo'],
+  props: ['dialog'],
   created () {
-    this.$parent.$on('ver', this.showMaquinaria)
-    this.$parent.$on('crear', this.createMaquinaria)
+    let vm = this
+    vm.$parent.$on('ver', id => {
+      vm.title = 'Maquinaria'
+      vm.getMaquinaria(id)
+      vm.editable = false
+    })
+    vm.$parent.$on('crear', () => {
+      vm.title = 'Nueva Maquinaria'
+      vm.editable = true
+    })
+    vm.loadMarcas()
   },
   methods: {
     submitMaquinaria (model) {
       let vm = this
       vm.loadingMaquinaria = true
       maquinariaService.save(model).then(data => {
-        vm.$emit('newMaquinaria', data)
+        vm.$emit('newMaquinaria', data.body)
         vm.$emit('closeDialog')
+        vm.loadingMaquinaria = false
       }, response => {
-        vm.errorMaquinaria = true
+        vm.loadingMaquinaria = false
+        vm.showSnack('Error al crear la maquinaria')
+      })
+    },
+    updateMaquinaria (model) {
+      let vm = this
+      vm.loadingMaquinaria = true
+      maquinariaService.update(model.id, model).then(data => {
+        vm.$emit('updateMaquinaria')
+        vm.$emit('closeDialog')
+        vm.loadingMaquinaria = false
+      }, response => {
+        vm.showSnack('Error al actualizar la maquinaria')
         vm.loadingMaquinaria = false
       })
     },
-    closeDialog () {
-      this.maquinaria = {}
-      this.$emit('closeDialog')
-    },
-    createMaquinaria () {
-      this.title = 'Nueva Maquinaria'
-      marcaService.query().then(data => {
-        this.marcas = data.body
-      })
-    },
-    showMaquinaria (id) {
-      this.title = 'Maquinaria'
+    getMaquinaria (id) {
+      let vm = this
       maquinariaService.getById(id).then(data => {
-        this.maquinaria = data.body
-        console.log(data)
+        vm.maquinaria = data.body
+        vm.maquinaria.marca = data.body.marca.descripcion
       })
+    },
+    closeDialog () {
+      let vm = this
+      vm.maquinaria = {}
+      vm.$emit('closeDialog')
+    },
+    loadMarcas () {
+      let vm = this
+      marcaService.query().then(data => {
+        vm.marcas = data.body
+      })
+    },
+    showSnack (message) {
+      let vm = this
+      vm.snack.message = message
+      vm.snack.model = true
     }
   }
 }
 </script>
+
