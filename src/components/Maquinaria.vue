@@ -10,16 +10,29 @@
         <td>{{ props.item.identificacion }}</td>
         <td>{{ props.item.anho }}</td>
         <td>{{ props.item.marca.descripcion }}</td>
-        <td><v-btn color="primary" small @click="setDialog('ver', props.item.id)">Ver</v-btn></td>
+        <td><v-btn color="primary" small @click="showForm(props.item.id)">Ver</v-btn></td>
       </template>
     </v-data-table>
 
-    <v-btn fab dark color="blue-grey darken-3" class="btn-flotante" @click="setDialog('crear')">
+    <v-btn fab dark color="blue-grey darken-3" class="btn-flotante" @click="showForm()">
       <v-icon dark>add</v-icon>
     </v-btn>
   
     <!-- Modal para agregar una maquinaria -->
-    <maquinaria-form :tipo="tipoForm" :dialog="dialog" @newMaquinaria="pushMaquinaria" @closeDialog="setDialog('hol',1)"></maquinaria-form>
+    <maquinaria-form 
+    :dialog="dialog" 
+    @newMaquinaria="pushMaquinaria"
+    @updateMaquinaria = "updateMaquinaria"
+    @closeDialog="dialog = false">
+    </maquinaria-form>
+
+    <v-snackbar 
+      v-model="snack.model"
+      :timeout="snack.timeout"
+      color="success">
+      {{ snack.message }}
+      <v-btn flat color="white" @click.native="snack.model = false">Cerrar</v-btn>
+    </v-snackbar>
 
   </section>
 </template>
@@ -39,25 +52,46 @@ export default {
       ],
       items: [],
       dialog: false,
-      maquinaria: {},
-      tipoForm: ''
+      snack: {
+        model: false,
+        message: '',
+        timeout: 4000
+      },
+      maquinaria: {}
     }
   },
   components: {MaquinariaForm},
   mounted () {
-    maquinariaService.query().then(data => {
-      this.items = data.body
-    })
+    let vm = this
+    vm.loadMaquinarias()
   },
   methods: {
-    setDialog (tipo, id) {
-      if (id) this.$emit(tipo, id)
-      else this.$emit(tipo)
-      this.tipoForm = tipo
-      this.dialog = !this.dialog
+    loadMaquinarias () {
+      let vm = this
+      maquinariaService.query().then(data => {
+        vm.items = data.body
+      })
     },
     pushMaquinaria (data) {
-      this.items.push(data)
+      let vm = this
+      vm.items.push(data)
+      vm.showSnack('Maquinaria agregada con exito')
+    },
+    updateMaquinaria (message) {
+      let vm = this
+      vm.loadMaquinarias()
+      vm.showSnack('Maquinaria actualizada con exito')
+    },
+    showForm (id) {
+      let vm = this
+      if (id) vm.$emit('ver', id)
+      else vm.$emit('crear')
+      vm.dialog = !this.dialog
+    },
+    showSnack (message) {
+      let vm = this
+      vm.snack.message = message
+      vm.snack.model = true
     }
   }
 }
