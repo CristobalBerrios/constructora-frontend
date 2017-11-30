@@ -27,6 +27,9 @@
                     </div>
                     <br>
                     <div><v-btn @click="showPresupuesto(presupuesto.id)" class="deep-orange accent-4 white--text" raised block>Entrar</v-btn></div>
+                    <div>
+                     <a :href="'http://localhost:8000/api/Presupuesto/exportExcel/' + presupuesto.id"><v-btn @click="descargar()" class="green darken-4 accent-4 white--text" raised block>Descargar Excel</v-btn></a>
+                    </div>
                   </div>
                 </v-flex>
                 <v-flex xs5>
@@ -110,6 +113,9 @@ export default {
       let vm = this
       vm.snack.message = message
       vm.snack.model = true
+    },
+    descargar () {
+      this.showSnack('Descargando Excel')
     }
   },
   mounted () {
@@ -119,4 +125,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+a {
+  text-decoration: none;
+}
+</style>
 

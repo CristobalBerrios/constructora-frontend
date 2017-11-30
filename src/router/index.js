@@ -47,10 +47,12 @@ const router = new Router({
           component: Consultas
         },
         {
+          name: 'trabajadores',
           path: 'trabajadores',
           component: Trabajador
         },
         {
+          name: 'materiales',
           path: 'materiales',
           component: Material
         }
