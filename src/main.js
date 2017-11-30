@@ -18,7 +18,8 @@ Vue.config.productionTip = false
 const credentials = new Credentials()
 // Added Interceptors
 Vue.http.interceptors.push(function (request, next) {
-  request.headers.set('Authorization', credentials.getToken())
+  if (request.url.includes(process.env.address.apiBot)) request.headers.set('Authorization', process.env.address.tokenBot)
+  else request.headers.set('Authorization', credentials.getToken())
   request.headers.set('Accept', 'application/json')
   next()
   /*

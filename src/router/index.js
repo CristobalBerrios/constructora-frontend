@@ -2,7 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import MyApp from '@/components/MyApp'
 import Obra from '@/components/Obra'
+import Presupuestos from '@/components/Presupuestos'
+import ShowPresupuesto from '@/components/ShowPresupuesto'
 import Maquinaria from '@/components/Maquinaria'
+import Trabajador from '@/components/Trabajador'
+import Material from '@/components/Material'
+import Consultas from '@/components/Consultas'
 import LoginComponent from '@/components/Login'
 import Credentials from '@/services/Credentials.service.js'
 
@@ -17,12 +22,37 @@ const router = new Router({
       component: MyApp,
       children: [
         {
+          name: 'maquinarias',
           path: 'maquinarias',
           component: Maquinaria
         },
         {
+          name: 'obras',
           path: 'obras',
           component: Obra
+        },
+        {
+          name: 'presupuestos',
+          path: 'obras/:id/presupuestos',
+          component: Presupuestos
+        },
+        {
+          name: 'showPresupuesto',
+          path: '/presupuesto/:id',
+          component: ShowPresupuesto
+        },
+        {
+          name: 'consultas',
+          path: 'consultas',
+          component: Consultas
+        },
+        {
+          path: 'trabajadores',
+          component: Trabajador
+        },
+        {
+          path: 'materiales',
+          component: Material
         }
       ]
     },

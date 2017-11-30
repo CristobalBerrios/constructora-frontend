@@ -18,7 +18,9 @@
                     <div class="headline">{{ obra.direccion }}</div>
                     <div>{{ obra.ciudad }}</div>
                     <br>
-                    <div><v-btn class="deep-orange accent-4 white--text" raised block>Entrar</v-btn></div>
+                    <div>
+                      <v-btn @click="verObra(obra.id)" class="deep-orange accent-4 white--text" raised block>Entrar</v-btn>
+                    </div>
                   </div>
                 </v-flex>
                 <v-flex xs5>
@@ -62,6 +64,9 @@ export default {
     },
     pushObra (data) {
       this.obras.push(data)
+    },
+    verObra (id) {
+      this.$router.push({name: 'presupuestos', params: {id: id}})
     }
   },
   mounted () {

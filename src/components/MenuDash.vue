@@ -26,7 +26,8 @@
       </div>
     </div>
     
-      <v-list dense>
+      <v-list subheader dense>
+        <v-subheader class="">Menu</v-subheader>
         <v-list-tile @click="go('obras')">
           <v-list-tile-action>
             <img src="../assets/shovel.png" alt="" class="icon">
@@ -90,6 +91,15 @@
             </v-list-tile-content>
         </v-list-tile>
         </v-list-group>
+        <v-subheader>Soporte</v-subheader>
+         <v-list-tile @click="go('consultas')">
+           <v-list-tile-action >
+              <v-icon>chat</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Consultas</v-list-tile-title>
+            </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
 </template>
@@ -99,7 +109,7 @@ export default {
   props: ['estado', 'usuario', 'empresa'],
   methods: {
     go (ruta) {
-      this.$router.push(ruta)
+      this.$router.push({name: ruta})
     },
     setEstado () {
       this.$emit('setEstado')
