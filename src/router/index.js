@@ -5,6 +5,8 @@ import Obra from '@/components/Obra'
 import Presupuestos from '@/components/Presupuestos'
 import ShowPresupuesto from '@/components/ShowPresupuesto'
 import Maquinaria from '@/components/Maquinaria'
+import Trabajador from '@/components/Trabajador'
+import Material from '@/components/Material'
 import Consultas from '@/components/Consultas'
 import LoginComponent from '@/components/Login'
 import Credentials from '@/services/Credentials.service.js'
@@ -43,6 +45,14 @@ const router = new Router({
           name: 'consultas',
           path: 'consultas',
           component: Consultas
+        },
+        {
+          path: 'trabajadores',
+          component: Trabajador
+        },
+        {
+          path: 'materiales',
+          component: Material
         }
       ]
     },
