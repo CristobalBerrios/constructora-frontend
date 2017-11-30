@@ -20,7 +20,7 @@
             label="Bot"
             color="teal darken-1"
             v-model="message.text"
-            rows="2"
+            :rows="message.rows"
             box
             multi-line
             readonly>
@@ -68,6 +68,11 @@ export default {
         newMessage.id = this.messages.length + 1
         newMessage.text = data.body.result.fulfillment.speech
         newMessage.isClient = false
+        if (newMessage.text.length < 30) {
+          newMessage.rows = 1
+        } else {
+          newMessage.rows = Math.round(newMessage.text.length / 30)
+        }
         this.messages.push(newMessage)
       })
       this.message = {}
