@@ -1,6 +1,6 @@
-# constructora
+# elerning
 
-> A Vue.js project
+> nueva gestion
 
 ## Build Setup
 

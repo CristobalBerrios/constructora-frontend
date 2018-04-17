@@ -9,7 +9,11 @@ import App from './App'
 import router from './router'
 
 import Credentials from '@/services/Credentials.service.js'
+
+import vueVimeoPlayer from 'vue-vimeo-player'
 // import {address} from '@/constants/address.js'
+
+Vue.use(vueVimeoPlayer)
 
 Vue.use(Vuetify)
 

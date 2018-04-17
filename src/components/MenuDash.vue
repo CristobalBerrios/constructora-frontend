@@ -28,46 +28,65 @@
     
       <v-list subheader dense>
         <v-subheader class="">Menu</v-subheader>
-        <v-list-tile @click="go('obras')">
+        <v-list-tile @click="go('showAllSpecialty')">
           <v-list-tile-action>
             <img src="../assets/shovel.png" alt="" class="icon">
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Obras</v-list-tile-title>
+            <v-list-tile-title>Especialidades</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="go('trabajadores')">
-          <v-list-tile-action>
-            <img src="../assets/engineer.png" alt="" class="icon">
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Trabajadores</v-list-tile-title>
-          </v-list-tile-content>
+        <v-list-group dense>
+          <v-list-tile slot="item" @click="">
+            <v-list-tile-action >
+              <v-icon>settings</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Cursos</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>keyboard_arrow_down</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-list-tile @click="go('newCource')">
+            <v-list-tile-content>
+              <v-list-tile-title>Crear Curso</v-list-tile-title>
+            </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="go('maquinarias')">
-          <v-list-tile-action>
-            <img src="../assets/loader.png" alt="" class="icon">
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Maquinaria</v-list-tile-title>
-          </v-list-tile-content>
+        <v-list-tile @click="go('newUnity')">
+            <v-list-tile-content>
+              <v-list-tile-title>Crear Unidades</v-list-tile-title>
+            </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="go('materiales')">
-          <v-list-tile-action>
-            <img src="../assets/wheelbarrow.png" alt="" class="icon">
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Materiales</v-list-tile-title>
-          </v-list-tile-content>
+                <v-list-tile @click="go('cursesCreated')">
+            <v-list-tile-content>
+                <v-list-tile-title>Cursos creados</v-list-tile-title>
+            </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="go('proveedores')">
-          <v-list-tile-action>
-            <img src="../assets/cart.png" alt="" class="icon">
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Proveedores</v-list-tile-title>
-          </v-list-tile-content>
+        <v-list-tile @click="go('curseInscrito')">
+            <v-list-tile-content>
+                  <v-list-tile-title>Cursos Inscritos</v-list-tile-title>
+            </v-list-tile-content>
         </v-list-tile>
+        </v-list-group>
+        <v-list-group dense>
+          <v-list-tile slot="item" @click="">
+            <v-list-tile-action >
+              <v-icon>settings</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Licencias</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>keyboard_arrow_down</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-list-tile @click="go('newLicence')">
+            <v-list-tile-content>
+              <v-list-tile-title>Crear Licencia</v-list-tile-title>
+            </v-list-tile-content>
+        </v-list-tile>
+        </v-list-group>
         <v-list-group dense>
           <v-list-tile slot="item" @click="">
             <v-list-tile-action >
@@ -82,12 +101,12 @@
           </v-list-tile>
           <v-list-tile @click="go('obras')">
             <v-list-tile-content>
-              <v-list-tile-title>Obras</v-list-tile-title>
+              <v-list-tile-title>Categorias</v-list-tile-title>
             </v-list-tile-content>
         </v-list-tile>
         <v-list-tile @click="go('obras')">
             <v-list-tile-content>
-              <v-list-tile-title>Marcas</v-list-tile-title>
+              <v-list-tile-title>Logos</v-list-tile-title>
             </v-list-tile-content>
         </v-list-tile>
         </v-list-group>

@@ -2,7 +2,7 @@
 <div>
     <v-toolbar class="white" fixed app>
       <v-toolbar-side-icon @click="toggleMenuDash()"></v-toolbar-side-icon>
-      <v-toolbar-title>Constructora</v-toolbar-title>
+      <v-toolbar-title>E-lerning</v-toolbar-title>
       <v-spacer></v-spacer>
 
       <v-menu>

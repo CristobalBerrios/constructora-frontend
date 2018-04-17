@@ -4,8 +4,18 @@
     <toolbar v-on:toggle-menu="toggle()" v-on:logout="logout()"></toolbar>
     <main class="grey lighten-2">
       <v-content>
-        <v-container fluid>
+        <v-container class="pl-0 pb-0 pt-0 pr-0" fluid>
         <router-view></router-view>
+        <v-btn
+              absolute
+              dark
+              fab
+              top
+              right
+              color="pink"
+            >
+              <v-icon>add</v-icon>
+            </v-btn>
 			</v-container>
       </v-content>
 		</main>
