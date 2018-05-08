@@ -1,9 +1,9 @@
 <template>
   <v-navigation-drawer
-      class="blue-grey darken-4 white--text"
+      class="primary white--text"
       v-model="estado"
       v-on:input="setEstado()"
-      width="230"
+      width="250"
       persistent
       enable-resize-watcher
       app
@@ -93,6 +93,24 @@
               <v-icon>settings</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
+              <v-list-tile-title>Usuario</v-list-tile-title>
+            </v-list-tile-content>
+            <v-list-tile-action>
+              <v-icon>keyboard_arrow_down</v-icon>
+            </v-list-tile-action>
+          </v-list-tile>
+          <v-list-tile @click="go('editUser')">
+            <v-list-tile-content>
+              <v-list-tile-title>Editar Usuario</v-list-tile-title>
+            </v-list-tile-content>
+        </v-list-tile>
+        </v-list-group>
+        <v-list-group dense>
+          <v-list-tile slot="item" @click="">
+            <v-list-tile-action >
+              <v-icon>settings</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
               <v-list-tile-title>Configuraciones</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action>
@@ -140,8 +158,8 @@ export default {
 <style scoped>
 
 .caja-info {
-  height: 120px;
-  background-image: url('../assets/fondo_dash.png');
+  height: 150px;
+  background-image: url('../assets/fondo.jpg');
   background-size: cover;
   background-position: center;
 }

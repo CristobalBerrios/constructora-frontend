@@ -14,6 +14,10 @@ import NewLeccion from '@/components/Leccion/NewLeccion'
 import CurseInscrito from '@/components/Curso/ShowCursoInscrito'
 import CuerseCreados from '@/components/Curso/ShowCursosCreados'
 import NuevaLicencia from '@/components/Licencia/newLicence'
+import NuevoUsuario from '@/components/Usuario/newUsuario'
+import EditarUsuario from '@/components/Usuario/EditUsuario'
+import UnidadesPorCurso from '@/components/Unidad/UnidadPerCurso'
+import ContentUnity from '@/components/Unidad/ContentUnity'
 
 Vue.use(Router)
 
@@ -79,23 +83,45 @@ const router = new Router({
           name: 'newLicence',
           path: 'newLicence',
           component: NuevaLicencia
+        },
+        {
+          name: 'editUser',
+          path: 'editUser',
+          component: EditarUsuario
+        },
+        {
+          name: 'Unidades',
+          path: 'Unidades/id',
+          component: UnidadesPorCurso
+        },
+        {
+          name: 'contentUnity',
+          path: 'contentUnity/id',
+          component: ContentUnity
         }
       ]
     },
     {
       path: '/login',
       component: LoginComponent
+    },
+    {
+      path: '/newUser',
+      component: NuevoUsuario
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   if (credentials.isLogin()) {
-    if (to.path === '/login') next({path: '/'})
+    if (to.path === '/login' || to.path === '/newUser') next({path: '/'})
     else next()
     next()
+  } else if (to.path === '/newUser') {
+    if (to.path === '/newUser') next()
+    else next({path: '/newUser'})
   } else {
-    if (to.path === '/login') next()
+    if (to.path === '/login' || to.path === '/newUser') next()
     else next({path: '/login'})
   }
 })

@@ -1,10 +1,12 @@
 <template>
 <div>
-    <v-toolbar class="white" fixed app>
+    <v-toolbar dark  flat color="primary" fixed app>
       <v-toolbar-side-icon @click="toggleMenuDash()"></v-toolbar-side-icon>
       <v-toolbar-title>E-lerning</v-toolbar-title>
       <v-spacer></v-spacer>
-
+ <v-btn icon>
+      <v-icon>search</v-icon>
+    </v-btn>
       <v-menu>
         <v-btn icon slot="activator">
           <v-icon>more_vert</v-icon>

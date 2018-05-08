@@ -1,4 +1,4 @@
-<template>
+UnidadPerCurso.vue<template>
   <section >
 <!--         <v-expansion-panel class="mt-2 ml-2 ">
           <v-expansion-panel-content class="">
@@ -21,29 +21,13 @@
                 </v-expansion-panel-content>
        </v-expansion-panel> -->
 
-        <v-card class="toolbar-misCursos" offset-xs1>
-        <v-layout row wrap offset-xs1>
-          <v-flex xs7 >
-            <p class=" pl-5 mt-4">Seleccione el curso para agregar Unidades</p>
-          </v-flex>
-          <v-flex xs3  >
-                             <v-select
-                label="Cursos"
-                v-model="unidad.course_id"
-                :items="cursos"
-                item-text="cource_title"
-                item-value="id"
-                required
-                @change="loadUnidades"
-                ></v-select>
-          </v-flex>
-        </v-layout>
-    </v-card>
     <v-layout row wrap>
     <v-flex xl3 lg3 md3 xs4 sm10 offset-xs1 >
      <form>
       <v-card class=" mt-3">
-        <h5 class=" pl-3 pt-3 pb-3 pr-3 header-card" >Agregar Unidad</h5>
+        <v-toolbar flat dark color="primary">
+          <v-toolbar-title  class="white--text">AGREGAR UNIDAD</v-toolbar-title>
+          </v-toolbar>
         <v-container fluid grid-list-md>
           <v-layout row wrap>
             <v-layout wrap class="pl-3 pt-3 pb-3 pr-3 "> 
@@ -59,6 +43,7 @@
                 <v-text-field
                 label="Descripcion"
                 v-model="unidad.unity_description"
+                multi-line
                 ></v-text-field>
               </v-flex>
               <v-flex xs12>
@@ -82,7 +67,10 @@
       <v-flex xl6 lg6 md6 xs6 sm10 offset-xs1 >
         <form>
           <v-card class=" mt-3">
-            <h5 class="text--white pl-3 pt-3 pb-3 pr-3  header-card" >Unidades</h5>
+             <v-toolbar flat dark color="primary">
+          <v-toolbar-title  class="white--text">UNIDADES</v-toolbar-title>
+          </v-toolbar>
+
             <v-container fluid grid-list-md>
                 <v-data-table
                   v-bind:headers="headers"
@@ -95,11 +83,9 @@
                   <td class="text-xs-right">{{ props.item.unity_name }}</td>
                   <td class="text-xs-right">{{ props.item.unity_description }}</td>
                   <td class="text-xs-right">
-                    <v-btn class="btn-table" color="primary" fab small dark @click="nuevaLeccion(props.item.id)" slot="activator" >
+                     <v-btn class="btn-table" color="primary" fab small dark @click="nuevaLeccion(props.item.id)" slot="activator" >
                     L
                 </v-btn>
-                  </td>
-                  <td class="text-xs-right">
                         <v-btn class="btn-table" color="primary" fab small dark @click="setCurrent(props.item)" slot="activator" @click.native.stop="dialogEditar = true">
                   <v-icon>edit</v-icon>
                 </v-btn>
@@ -121,7 +107,6 @@
 <script>
 import { courceService } from '@/services/Cource.service'
 import { unidadService } from '@/services/Unidad.service'
-import { getAllCurseOfUserService } from '@/services/GetAllCurseOfUser.service'
 import { getAllUnityOfCurseService } from '@/services/GetAllUnityOfCurse.service'
 export default {
   data () {
@@ -148,7 +133,6 @@ export default {
         },
         { text: 'Unidad', value: 'unidad' },
         { text: 'Descripcion', value: 'descriocion' },
-        { text: 'Agregar Leccion', value: '' },
         { text: '', value: '' }
       ]
     }
@@ -160,13 +144,6 @@ export default {
         console.log(data.body)
         vm.curso = data.body
         console.log(vm.curso)
-      })
-    },
-    loadCursos () {
-      let vm = this
-      getAllCurseOfUserService.query().then(data => {
-        console.log(data.body)
-        vm.cursos = data.body
       })
     },
     loadUnidades (id) {
@@ -181,7 +158,7 @@ export default {
     },
     submitUnidad (model) {
       let vm = this
-      // model.course_id = vm.idCurso
+      model.course_id = vm.idCurso
       console.log(model)
       unidadService.save(model).then(data => {
         vm.unidades = data.body
@@ -191,7 +168,7 @@ export default {
       })
     },
     nuevaLeccion (id) {
-      this.$router.push({name: 'newLesson', params: {id: id}})
+      this.$router.push({name: 'contentUnity', params: {id: id}})
     }
   },
   mounted () {
@@ -199,7 +176,7 @@ export default {
     vm.idCurso = vm.$route.params.id
     console.log('id curso ' + vm.$route.params.id)
     vm.loadCurso()
-    vm.loadCursos()
+    vm.loadUnidades(vm.idCurso)
   }
 }
 </script>
@@ -207,8 +184,7 @@ export default {
 <style scoped>
 
 .header-card{
-  background-color: #0d47a1;
-  color: white
+
 }
 
 .toolbar-misCursos{
